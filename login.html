@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login and Signup</title>
+  <style>
+    /* Add your CSS styling here */
+    .modal {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999999;
+    }
+    .favorites-headline {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .close-button {
+      cursor: pointer;
+    }
+    .auth form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .email-input, .password-input {
+      margin-bottom: 10px;
+    }
+    .log-in {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .sign-up-now1, .sign-in-now1 {
+      color: #007BFF;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="ex1" class="modal" style="height: 475px;">
+    <div id="sign_up">
+      <section class="favorites-headline">
+        <div class="favorites-actions">
+          <div class="user-avatar">
+            <img class="biperson-icon" loading="lazy" alt="" src="./public/biperson.svg" />
+          </div>
+          <h2 class="sign-up">Sign Up</h2>
+        </div>
+        <div class="close-button">
+          <img class="close-x-icon" loading="lazy" alt="" src="./public/close-x.svg" />
+        </div>
+      </section>
+      <section class="auth">
+        <form id="signup-form" class="credentials">
+          <div class="email-input">
+            <div class="email-field">
+              <input class="email-address" id="signup-email" placeholder="Email address" type="text" required />
+            </div>
+          </div>
+          <div class="password-input">
+            <input class="email-address" id="signup-pass" placeholder="Password" type="password" required />
+          </div>
+          <div class="login-actions">
+            <button type="button" class="log-in" id="btn-signup">SIGN UP</button>
+            <div class="signup-option">
+              <div class="account-question">
+                <div class="already-have-an">Already have an account?</div>
+                <div class="signup-link">
+                  <div id="log-in-now" class="sign-up-now1">LOG IN</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+    <div id="log_in" style="display: none;">
+      <section class="favorites-headline">
+        <div class="favorites-actions">
+          <div class="user-avatar">
+            <img class="biperson-icon" loading="lazy" alt="" src="./public/biperson.svg" />
+          </div>
+          <h2 class="sign-up">Sign In</h2>
+        </div>
+        <div class="close-button">
+          <img class="close-x-icon" loading="lazy" alt="" src="./public/close-x.svg" />
+        </div>
+      </section>
+      <section class="auth">
+        <form id="login-form" class="w-100 align-items-start gap-2">
+          <div class="email-input mb-4">
+            <div class="email-field">
+              <input class="email-address" id="login-email" placeholder="Email address" type="text" required />
+            </div>
+          </div>
+          <div class="password-input">
+            <input class="email-address" id="login-pass" placeholder="Password" type="password" required />
+          </div>
+          <span class="w-100 d-flex justify-content-end">
+            <span class="forgot-password1">Forgot Password</span>
+          </span>
+          <div class="login-actions mt-3">
+            <button type="button" class="log-in" id="btn-login">Log In</button>
+            <div class="signup-option">
+              <div class="account-question">
+                <div class="already-have-an">Don’t have an account?</div>
+                <div class="signup-link">
+                  <div id="sign-up-now" class="sign-up-now1">Sign up now.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // Toggle between login and signup forms
+    document.getElementById('log-in-now').addEventListener('click', () => {
+      document.getElementById('sign_up').style.display = 'none';
+      document.getElementById('log_in').style.display = 'block';
+    });
+
+    document.getElementById('sign-up-now').addEventListener('click', () => {
+      document.getElementById('sign_up').style.display = 'block';
+      document.getElementById('log_in').style.display = 'none';
+    });
+
+    // Signup functionality
+    document.getElementById('btn-signup').addEventListener('click', () => {
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-pass').value;
+
+      if (email && password) {
+        localStorage.setItem('user', JSON.stringify({ email, password }));
+        alert('Signup successful!');
+        document.getElementById('sign_up').style.display = 'none';
+        document.getElementById('log_in').style.display = 'block';
+      } else {
+        alert('Please fill in all fields.');
+      }
+    });
+
+    // Login functionality
+    document.getElementById('btn-login').addEventListener('click', () => {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-pass').value;
+
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user && user.email === email && user.password === password) {
+        alert('Login successful!');
+        // Redirect or close modal as needed
+      } else {
+        alert('Invalid email or password.');
+      }
+    });
+  </script>
+</body>
+</html>
